@@ -1,7 +1,7 @@
 {
-    "name": "holdit.lol (beta)",
-    "version": "0.7.5",
-    "description": "Handy objection.lol Courtroom features",
+    "name": "holdit.lol (remade)",
+    "version": "0.0.1",
+    "description": "Handy Objection.lol Courtroom Features",
     "permissions": [
         "webNavigation",
         "storage",
@@ -12,7 +12,6 @@
     ],
     "host_permissions": [
         "*://objection.lol/courtroom/*",
-        "*://cdn.discordapp.com/*",
         "*://file.garden/*",
         "*://www.court-records.net/*",
         "*://user-images.githubusercontent.com/*"
