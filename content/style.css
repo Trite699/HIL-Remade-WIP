@@ -1,0 +1,901 @@
+:root {
+    --default-transition: .28s cubic-bezier(.4, 0, .2, 1);
+    --color-testimony-dark: #552a2e;
+    --color-testimony-light: #be747b;
+    --color-primary: #2096f3;
+    --color-d-bg-primary: #121212;
+    --color-d-bg-secondary: #1e1e1e;
+    --color-d-bg-tertiary: #272727;
+    --color-l-bg-primary: #fff;
+    --color-l-bg-secondary: #fff;
+    --color-l-bg-tertiary: #d8d8d8;
+}
+
+body.theme--dark {
+    background: var(--color-d-bg-primary);
+}
+
+body.theme--light {
+    background: var(--color-l-bg-primary);
+}
+
+body.hil-loading-menus #app>div:not(.v-application--wrap):not(.hil-join-dialog):not(.v-overlay--active) {
+    display: none;
+}
+
+.hil-themed.v-btn:not(.v-btn--active):not(:hover):focus:before {
+    opacity: 0 !important;
+}
+
+div.hil-message-toggles {
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 16px;
+}
+
+div.hil-message-toggles>div {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+div.hil-row {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 10px;
+    height: 30px;
+}
+
+.hil-content-row>div {
+    position: absolute;
+    transition: var(--default-transition);
+}
+
+hr.hil-row-separator {
+    margin-bottom: 10px;
+    opacity: 30%;
+    border-color: #808080;
+    transition: var(--default-transition);
+}
+
+.hil-row-btn {
+    height: 100% !important;
+    font-weight: normal !important;
+    text-transform: none !important;
+    text-overflow: clip !important;
+    transition: var(--default-transition) !important;
+}
+
+button.hil-btn-tab-active.theme--dark {
+    background: #444 !important;
+}
+
+button.hil-btn-tab-active.theme--light {
+    background: #ddd !important;
+}
+
+input.hil-row-textbox {
+    display: block;
+    height: 100%;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    overflow: hidden;
+    transition: var(--default-transition);
+    color: #fff;
+}
+
+div.hil-row span {
+    margin-top: auto;
+    margin-bottom: auto;
+    font-weight: 300;
+}
+
+div.hil-tab-content {
+    width: 100%;
+}
+
+div.hil-tab-row-now-playing {
+    justify-content: right;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+div.hil-tab-row-now-playing span {
+    margin-right: 12px;
+}
+
+input.hil-tn-pattern {
+    max-width: 3rem;
+    color: #fff;
+}
+
+button.hil-testiony-btn {
+    flex: 1 1 auto !important;
+    background-color: var(--color-testimony-dark) !important;
+    padding: 0 8px !important;
+    font-size: small !important;
+}
+
+.hil-testiony-btn.theme--light {
+    background-color: var(--color-testimony-light) !important;
+}
+
+.hil-tab-row-tts>button,
+.hil-tab-row-tts>div {
+    flex: 1;
+}
+
+.hil-voice-dropdown {
+    padding: 0 12.5% !important;
+    min-width: 33% !important;
+}
+
+.hil-voice-dropdown .hil-checkbox-list {
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 800% !important;
+    position: absolute;
+    box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);
+    transition: var(--default-transition);
+}
+
+.hil-checkbox-list {
+    overflow-y: scroll;
+}
+
+.hil-checkbox-list>div {
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: var(--default-transition);
+}
+
+.hil-checkbox-list>div.theme--dark {
+    background: var(--color-d-bg-secondary);
+}
+
+.hil-checkbox-list>div.theme--light {
+    background: var(--color-l-bg-secondary);
+}
+
+.hil-checkbox-list>div.theme--dark:hover {
+    background: #303030;
+}
+
+.hil-checkbox-list>div.theme--light:hover {
+    background: #f6f6f6;
+}
+
+.hil-checkbox-list>div.theme--dark.hil-active {
+    background: #283a4f;
+}
+
+.hil-checkbox-list>div.theme--light.hil-active {
+    background: #e0e9f7;
+}
+
+.hil-checkbox-list>div>i {
+    margin-right: 24px;
+}
+
+.hil-checkbox-list>div>span {
+    font-weight: 400;
+}
+
+button.hil-icon-button {
+    border-radius: 100%;
+    background-color: #292929 !important;
+    transition: var(--default-transition);
+    aspect-ratio: 1;
+}
+
+button.hil-icon-button-hover {
+    height: 38px;
+    margin-left: 4px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+div.v-list-item:hover button.hil-icon-button-hover {
+    opacity: 1;
+    visibility: visible;
+}
+
+button.hil-icon-button-hover i {
+    opacity: 0.7;
+}
+
+button.hil-icon-button-corner {
+    height: 24px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    opacity: 0;
+}
+
+button.hil-icon-button-corner i {
+    font-size: 20px !important;
+}
+
+div:hover>button.hil-icon-button-corner {
+    opacity: 1;
+}
+
+div.hil-user-action-buttons {
+    z-index: 1;
+}
+
+div.hil-user-action-icons {
+    position: absolute;
+    right: 16px;
+}
+
+div.hil-user-action-icons i {
+    transition: var(--default-transition) !important;
+    margin-right: 7px;
+    margin-left: 11px;
+    opacity: 0.33;
+}
+
+div.hil-small-tooltip {
+    line-height: 12px;
+    opacity: 0.9;
+    z-index: 2000;
+    transition: var(--default-transition);
+    transition-property: opacity, visibility;
+    text-wrap: nowrap;
+}
+
+.hil-card {
+    z-index: 10;
+    position: absolute;
+    width: 400px;
+    height: fit-content;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.8), 0 6px 20px 0 rgba(0, 0, 0, 0.8);
+    transition: var(--default-transition);
+}
+
+.hil-card hr {
+    margin: 16px 0;
+}
+
+.hil-card.theme--dark {
+    background: var(--color-d-bg-secondary);
+}
+
+.hil-card.theme--light {
+    background: var(--color-l-bg-secondary);
+}
+
+.hil-evidence-title {
+    margin: 10px 0;
+    text-align: center;
+    width: 100%;
+    font-family: roboto;
+    font-size: 16px;
+}
+
+.hil-evidence-submit {
+    width: 100%;
+    height: 40px;
+    font-size: 18px;
+    font-family: roboto;
+    cursor: pointer;
+}
+
+.hil-evidence-error {
+    text-align: center;
+    margin: 10px 0;
+}
+
+#hil-evidence-area {
+    height: 400px;
+    margin-bottom: 10px;
+    padding: 5px;
+    overflow: auto;
+    font-family: roboto;
+}
+
+#hil-evidence-area.theme--dark {
+    border: solid rgba(255, 255, 255, 0.2) thin;
+}
+
+#hil-evidence-area.theme--light {
+    border: solid rgba(0, 0, 0, 0.2) thin;
+}
+
+#hil-evidence-area .hil-evd-error {
+    background-color: #ff525280 !important;
+}
+
+#hil-evidence-area .hil-evd-warning {
+    background-color: #ff8e0080 !important;
+}
+
+#hil-evidence-area * {
+    font-family: sans-serif !important;
+    font-size: 11pt;
+    color: #fff !important;
+    background: transparent !important;
+}
+
+#hil-evidence-area table {
+    border: none !important;
+    border-collapse: collapse !important;
+}
+
+#hil-evidence-area td, #hil-evidence-area th {
+    border: solid #777 1px !important;
+    min-width: 20px;
+    min-height: 20px;
+}
+
+.hil-pose-edit-icon {
+    width: 48px;
+    height: 48px;
+    margin-left: auto;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.hil-pose-edit-icon:hover {
+    background-color: #77777720;
+}
+
+.hil-pose-edit-icon:active {
+    background-color: #77777740;
+}
+
+.hil-pose-edit-card {
+    width: 400px;
+    line-height: 1.2;
+    font-size: 1rem;
+    font-family: Roboto, sans-serif;
+}
+
+.hil-pose-edit-card>div {
+    position: relative;
+}
+
+.hil-pose-edit-card .hil-pose-title {
+    margin: 12px 0;
+}
+
+.hil-pose-edit-card .hil-pose-icon-delete {
+    margin: auto 10px;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: var(--default-transition);
+    transition-property: opacity;
+}
+
+.hil-pose-edit-card .hil-pose-icon-delete:hover {
+    opacity: 0.8;
+}
+
+.hil-pose-edit-card .hil-pose-icon-delete:active {
+    opacity: 1;
+}
+
+.hil-pose-edit-card .hil-close-button {
+    padding: 18px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: -18px;
+    align-self: center;
+    transition: var(--default-transition);
+}
+
+.hil-pose-edit-card .hil-close-button:hover {
+    background-color: #77777720;
+}
+
+.hil-pose-edit-card .hil-close-button:active {
+    background-color: #77777740;
+}
+
+.hil-pose-edit-card .hil-swiper-container>.hil-swiper>* {
+    position: relative;
+    cursor: pointer;
+    transition: var(--default-transition);
+    transition-property: background-color, visibility, opacity;
+}
+
+.hil-pose-edit-card .hil-swiper-container.theme--dark>.hil-swiper>* {
+    background-color: var(--color-d-bg-tertiary);
+}
+
+.hil-pose-edit-card .hil-swiper-container.theme--light>.hil-swiper>* {
+    background-color: var(--color-l-bg-tertiary);
+}
+
+.hil-pose-edit-card>div>div {
+    margin: 0 16px;
+}
+
+.hil-pose-edit-card hr {
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.hil-pose-edit-card .hil-canvas-column canvas {
+    width: 72px;
+    height: 72px;
+    border: #7775 2px solid;
+    cursor: move;
+}
+
+.hil-pose-edit-card .hil-card-centered {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    margin: 0;
+}
+
+.hil-pose-edit-card .v-progress-circular {
+    height: 32px;
+}
+
+.hil-pose-edit-card .hil-canvas-column {
+    width: 72px;
+    margin-left: 16px;
+}
+
+.hil-pose-edit-card .hil-canvas-column> :nth-child(2) {
+    line-height: 2;
+    transition: var(--default-transition);
+    margin-left: -4px;
+    opacity: 0.7;
+}
+
+.hil-pose-edit-card .hil-canvas-column> :nth-child(2)>div>i {
+    opacity: 0.7;
+}
+
+.hil-pose-edit-card .v-input__control {
+    margin: 16px 0 8px 0;
+}
+
+.hil-pose-edit-card .v-slider__thumb-label {
+    height: 28px;
+    width: 28px;
+}
+
+.hil-pose-edit-card .v-slider__track-background {
+    width: 100%;
+}
+
+.hil-pose-edit-card .hil-swiper-container {
+    height: 48px;
+    margin-bottom: 20px;
+}
+
+.hil-pose-edit-card .v-messages {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.hil-pose-edit-card>div>.v-messages {
+    margin: 8px 16px;
+}
+
+.hil-pose-edit-card .hil-icon-frames canvas {
+    height: 100%;
+}
+
+.hil-pose-edit-card .hil-icon-overlays>div,
+.hil-pose-edit-card .hil-icon-underlays>div {
+    transition-property: background-color, opacity, visibility !important;
+}
+
+.hil-pose-edit-card .hil-icon-overlays>div.hil-layer-icon,
+.hil-pose-edit-card .hil-icon-underlays>div.hil-layer-icon {
+    position: relative;
+    height: 100%;
+    aspect-ratio: 1;
+}
+
+.hil-pose-edit-card .hil-icon-overlays>div.hil-layer-icon>img,
+.hil-pose-edit-card .hil-icon-underlays>div.hil-layer-icon>img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.hil-pose-edit-card i.hil-add-button {
+    background-color: transparent !important;
+    font-size: 42px;
+    opacity: 0.6;
+    transition: var(--default-transition) !important;
+}
+
+.hil-pose-edit-card i.hil-add-button:hover {
+    opacity: 0.8;
+}
+
+.hil-pose-edit-card i.hil-add-button:active {
+    opacity: 1;
+}
+
+.hil-pose-edit-card i.hil-add-button.hil-activated {
+    transform: rotate(15deg);
+}
+
+.hil-pose-edit-card .hil-swiper>.hil-selected {
+    outline: 2px solid #7f3f45;
+}
+
+.hil-pose-edit-card .hil-edit-button-row {
+    display: flex;
+    height: 2rem;
+    gap: 4px;
+}
+
+.hil-pose-edit-card .hil-edit-button-row button {
+    flex: auto;
+}
+
+.hil-pose-edit-card .hil-export-method-dropdown {
+    position: relative;
+}
+
+.hil-pose-edit-card label.hil-dropdown-label {
+    position: absolute;
+    font-size: 12px;
+    transform: translate(8px, -6px);
+    padding: 0 4px;
+    width: fit-content;
+}
+
+.hil-pose-edit-card label.hil-dropdown-label.theme--dark {
+    background-color: var(--color-d-bg-secondary);
+}
+
+.hil-pose-edit-card label.hil-dropdown-label.theme--light {
+    background-color: var(--color-l-bg-secondary);
+}
+
+.hil-pose-edit-card .hil-export-method-dropdown i {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translate(-36px, -50%);
+    pointer-events: none;
+}
+
+.hil-pose-edit-card select.hil-dropdown {
+    border-radius: 4px;
+    border-style: solid;
+    border-width: thin;
+    min-height: 40px;
+    padding: 8px 12px;
+    width: -webkit-fill-available;
+    cursor: text;
+    transition: var(--default-transition);
+    transition-property: border;
+}
+
+.hil-pose-edit-card select.hil-dropdown.theme--dark {
+    color: #fff;
+    border-color: #ffffff3d;
+}
+
+.hil-pose-edit-card select.hil-dropdown.theme--light {
+    color: #000;
+    border-color: #0000003d;
+}
+
+.hil-pose-edit-card select.hil-dropdown.theme--dark:hover {
+    border-color: #fff;
+}
+
+.hil-pose-edit-card select.hil-dropdown.theme--light:hover {
+    border-color: #242424;
+}
+
+.hil-pose-edit-card .hil-export-textbox input {
+    height: 40px!important;
+    width: 100%!important;
+    text-align: left!important;
+    padding: 8px 12px!important;
+}
+
+.hil-icon-export-card .v-progress-circular {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.hil-icon-export-card.hil-export-loading .v-progress-circular {
+    visibility: visible;
+    opacity: 1;
+}
+
+.hil-icon-export-card.hil-export-loading .hil-hide-on-load {
+    visibility: hidden!important;
+    opacity: 0!important;
+}
+
+@keyframes hil-pose-edit-image-shake {
+    5% {
+        transform: translate(-0.3%, 0.35%) rotate(-0.631deg) scale(0.875)
+    }
+
+    10% {
+        transform: translate(0.2%, -1.2%) rotate(-1.263deg) scale(0.85)
+    }
+
+    15% {
+        transform: translate(-1.2%, -0.6%) rotate(-0.631deg) scale(0.825)
+    }
+
+    20% {
+        transform: translate(-0.8%, -1.6%) rotate(3.578deg) scale(0.8)
+    }
+
+    25% {
+        transform: translate(-2.25%, -2.5%) rotate(-4.473deg) scale(0.775)
+    }
+
+    30% {
+        transform: translate(-2.7%, -4.5%) rotate(0.315deg) scale(0.75)
+    }
+
+    35% {
+        transform: translate(-3.85%, 1.75%) rotate(-5.157deg) scale(0.725)
+    }
+
+    40% {
+        transform: translate(-2.0%, -1.2%) rotate(7.578deg) scale(0.7)
+    }
+
+    45% {
+        transform: translate(5.4%, 3.15%) rotate(-8.052deg) scale(0.675)
+    }
+
+    50% {
+        transform: translate(4.0%, 6.5%) rotate(-8.947deg) scale(0.65)
+    }
+
+    55% {
+        transform: translate(-3.85%, 7.7%) rotate(-3.473deg) scale(0.625)
+    }
+
+    60% {
+        transform: translate(-1.2%, 6.0%) rotate(10.105deg) scale(0.6)
+    }
+
+    65% {
+        transform: translate(-2.6%, -7.8%) rotate(-11.631deg) scale(0.575)
+    }
+
+    70% {
+        transform: translate(-8.4%, -7.7%) rotate(5.894deg) scale(0.55)
+    }
+
+    75% {
+        transform: translate(-6.75%, 3.75%) rotate(-14.210deg) scale(0.525)
+    }
+
+    80% {
+        transform: translate(-4.0%, -7.2%) rotate(16.842deg) scale(0.5)
+    }
+
+    85% {
+        transform: translate(-3.4%, -8.5%) rotate(-6.263deg) scale(0.475)
+    }
+
+    90% {
+        transform: translate(13.5%, 10.8%) rotate(14.052deg) scale(0.45)
+    }
+
+    95% {
+        transform: translate(14.25%, -13.3%) rotate(20deg) scale(0.425)
+    }
+
+    100% {
+        transform: scale(0.4)
+    }
+}
+
+.hil-pose-edit-image-shake {
+    animation-name: hil-pose-edit-image-shake;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+}
+
+.hil-swiper-container {
+    overflow: hidden;
+}
+
+.hil-swiper {
+    height: 100%;
+    padding: 2px 4px;
+    transition: transform ease-out 0ms;
+    display: flex;
+    gap: 4px;
+}
+
+.hil-swiper>* {
+    height: 100%;
+}
+
+.hil-cc-loading-bar {
+    transition: var(--default-transition);
+    transition-property: height, width, left;
+    position: relative;
+    overflow: hidden;
+    height: 20px;
+    background: #414141;
+}
+
+.hil-cc-loading-bar.hil-disabled {
+    height: 0;
+}
+
+.hil-cc-loading-bar>div {
+    transition: inherit;
+    position: absolute;
+    top: 0;
+    height: 100%;
+}
+
+.hil-cc-loading-bar>div:nth-child(1) {
+    background: var(--color-primary);
+}
+
+.hil-cc-loading-bar>div:nth-child(2) {
+    width: 20%;
+    animation: hil-cc-loading-bar 2s linear infinite;
+    background: #414141;
+}
+
+@keyframes hil-cc-loading-bar {
+    from {
+        left: -20%;
+    }
+
+    to {
+        left: 100%;
+    }
+}
+
+.hil-pixel-img {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.hil-hide {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.hil-classic-speech-button {
+    border-color: #ffffff1f;
+    border-radius: 0;
+    border-style: solid;
+    border-width: thin;
+    box-shadow: none;
+}
+
+button.hil-expanded-log-button {
+    height: 48px;
+    position: absolute;
+    z-index: 2;
+    top: 17px;
+    right: 32px;
+}
+
+button.hil-expanded-log-settings-button {
+    z-index: 1;
+    transition: var(--default-transition);
+    transition-property: top;
+}
+
+button.hil-expanded-log-settings-button.hil-shown {
+    top: 82px;
+}
+
+div.hil-expanded-log {
+    padding: 16px;
+    font-size: 14px;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    gap: 10px;
+}
+
+div.hil-expanded-log.hil-hide-timestamps .hil-log-timestamp {
+    display: none;
+}
+
+div.hil-expanded-log .hil-log-plain,div.hil-expanded-log .hil-log-timestamp {
+    color: #bbb;
+}
+
+div.hil-expanded-log .hil-log-plain .hil-log-timestamp {
+    color: #888;
+}
+
+div.hil-expanded-log.hil-hide-plain .hil-log-plain {
+    display: none;
+}
+
+div.hil-expanded-log.hil-no-breaks br {
+    display: none;
+}
+
+div.hil-expanded-log.hil-hide-muted .hil-log-muted {
+    display: none;
+}
+
+div.hil-expanded-log.hil-hide-tags .hil-log-tag {
+    display: none;
+}
+
+div.hil-expanded-log.hil-hide-names .hil-log-name {
+    display: none;
+}
+
+div.hil-speech-bubble-column {
+    position: absolute;
+    width: calc(100% - 8px);
+}
+
+div.hil-log-settings-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    margin-top: 16px;
+}
+
+div.hil-log-settings-row input[type="color"] {
+    width: 90px;
+}
+
+div.hil-log-settings-color-name {
+    opacity: 0.7;
+}
+
+div.hil-log-settings-color {
+    display: flex;
+    gap: 8px;
+}
+
+div.hil-log-settings-color button i {
+    font-size: 18px;
+}
+
+button.hil-log-colors-button {
+    width: calc(100% - 32px);
+    margin: 16px;
+}
+
+div.hil-quick-sfx-row {
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+div.hil-quick-sfx-row > button:nth-child(1) {
+    width: 30px;
+}
+
+div.hil-quick-sfx-row button.hil-unknown-sound {
+    background-color: #ff525277!important;
+}
+
+div.hil-quick-sfx-row button i.v-icon {
+    font-size: 18px;
+}
+
+div.hil-quick-sfx-row input {
+    max-width: 7rem;
+}
