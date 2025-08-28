@@ -2862,7 +2862,7 @@ window.addEventListener('load', function() {
     if (!tryMain()) {
         new MutationObserver(function(mutations, observer) {
             if (tryMain()) observer.disconnect();
-        }).observe(document.getElementById('app'), {
+        }).observe(document.getElementById('root'), {
             childList: true,
             subtree: true,
         });
