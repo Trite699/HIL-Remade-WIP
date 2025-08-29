@@ -67,7 +67,7 @@ function onLoad(options) {
 
     const showTutorial = !options['seen-tutorial'] || !(Object.values(options).filter(x => x).length > 1);
 
-    const app = document.getElementById('app');
+    const app = document.getElementById('root');
     textArea = document.querySelector('.frameTextarea');
     textArea.classList.add('hil-loaded');
     const textValue = text => setValue(textArea, text);
