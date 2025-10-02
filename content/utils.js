@@ -1,4 +1,4 @@
-export const extUtils = {
+const extUtils = {
 
     transparentGif: 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==',
 
@@ -20,7 +20,7 @@ export const extUtils = {
         },
 
         addMessageListener: function(window, action, callback, once=false) {
-            const listener = hilUtils.addMessageListenerAll(window, function(eventAction, eventData) {
+            const listener = this.addMessageListenerAll(window, function(eventAction, eventData) {
             if (eventAction !== action) return;
             callback(eventData);
             if (once) window.removeEventListener('message', listener);
@@ -46,7 +46,7 @@ export const extUtils = {
         },
 
         getLabel: function(innerText) { 
-            return [].find.call(document.querySelectorall('label'), label => label.innerText === innerText);
+            return [].find.call(document.querySelectorAll('label'), label => label.innerText === innerText);
         },
 
         getInputContent: function(app) {
@@ -135,7 +135,7 @@ export const extUtils = {
                 document.execCommand("insertText", false, text);
             } else {
                 const value = elem.value;
-                setValue(elem, value.slice(0, index) + text + value.slice(index));
+                this.setValue(elem, value.slice(0, index) + text + value.slice(index));
             }
         }
     },
@@ -292,30 +292,11 @@ export const extUtils = {
                 document.removeEventListener('mousemove', adjust);
             }, { once: true });
         },
-
-        sliderListener: function(event, sliderContainer, min, max, callback) {
-            sliderContainer.querySelector('.v-slider__thumb-container').classList.add('v-slider__thumb-container--active');
-            const adjust = function(e) {
-                const sliderRect = sliderContainer.querySelector('.v-slider').getClientRects()[0];
-                const sliderPosition = (e.clientX - sliderRect.x) / sliderRect.width;
-                let value = Math.round(sliderPosition * (max - min) + min);
-                if (value > max) value = max;
-                else if (value < min) value = min;
-                hilUtils.setSlider(sliderContainer, value, min, max);
-                if (callback) callback(value);
-            }
-            adjust(event);
-            document.addEventListener('mousemove', adjust);
-            document.addEventListener('mouseup', function () {
-                sliderContainer.querySelector('.v-slider__thumb-container').classList.remove('v-slider__thumb-container--active');
-                document.removeEventListener('mousemove', adjust);
-            }, { once: true });
-        }
     },
     creation: {
         createIcon: function(iconClass, fontPx = 24, styleText = '', classText = '') {
             const icon = document.createElement('i');
-            icon.className = classText + ' v-icon notranslate mdi hil-themed ' + hilUtils.getTheme();
+            icon.className = classText + ' v-icon notranslate mdi hil-themed ' + (this.theme?.getTheme?.() ?? 'default-theme');
             icon.classList.add('mdi-' + iconClass);
             if (fontPx && fontPx !== 24) icon.style.cssText = 'font-size: ' + fontPx + 'px;'
             if (styleText) icon.style.cssText += styleText;
@@ -338,6 +319,6 @@ export const extUtils = {
         }
         
     }
-}
+};
 
 window.postMessage(['loaded_utils']);

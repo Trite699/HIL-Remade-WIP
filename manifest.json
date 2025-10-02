@@ -23,12 +23,14 @@
             ],
             "js": [
                 "content/utils.js",
-                "content/content.js"
+                "content/helperFunctions.js",
+                "content/constants.js",
+                "content/main.js"
             ],
             "css": [
                 "content/style.css"
             ],
-            "run_at": "document_end"
+            "run_at": "document_end"        
         }
     ],
     "web_accessible_resources": [
