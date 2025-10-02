@@ -247,18 +247,11 @@ class Courtroom {
   }
 }
 
-
-
-async function main() {
-  let userInstanceCourtroom = new Courtroom();
-}
-
-main();
-    
+let userInstanceCourtroom = new Courtroom();
 /*
 
 REFACTOR ALL OF IT
-   if (showTutorial || options['testimony-mode'] || options['now-playing'] || options['smart-tn'] || options['tts'] || options['quick-sfx']) {
+   if (showTutorial || options['testimony-mode'] || options['smart-tn'] || options['tts'] || options['quick-sfx']) {
         if (showTutorial) {
             if (!options['seen-tutorial']) {
                 toggleHelperDiv(true);
