@@ -3,14 +3,17 @@
 const shakeDuration = 400;
 const extraDuration = shakeDuration + 100;
 
-function makeCourtURL() {
-    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < 6; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
-   }
-   return result;
-}
+/* 
+ * function 'main' formerly having three responsbilities commits to two now:
+ * 1. On a button being clicked it would shake the button
+ * 2. Take users to the options button of hold.it. 
+ * 
+ * Formerly, it used to handle the creation of randomize courtrooms, but with the new systems in place
+ * this functionally has been deemed impossible with the new version of the site.
+ * 
+ * Usage:
+ * This function is used to make the options button shake when it is clicked in the web extension and switch to the options menu.
+*/
 
 function main() {
   for (let bubble of document.querySelectorAll('.bubble-btn')) {
@@ -28,15 +31,6 @@ function main() {
   btnOptions.addEventListener('click', function() {
     setTimeout(function() {
       chrome.runtime.openOptionsPage();
-      window.close();
-    }, shakeDuration);
-  });
-
-  const btnCourt = document.getElementById('new-court');
-
-  btnCourt.addEventListener('click', function() {
-    setTimeout(function() {
-      chrome.tabs.create({url: 'https://objection.lol/courtroom'});
       window.close();
     }, shakeDuration);
   });
