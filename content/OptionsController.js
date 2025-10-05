@@ -4,22 +4,24 @@ const FileHelpers = helpersUtils;
 const FileExts = extUtils;
 const FileConstants = properties;
 
-
 class CourtroomOptionsHandler {
   constructor(courtroom) {
     this.Courtroom = courtroom;
-    this.helperToggle; 
+    this.helperToggle =  FileExts.creation.createIcon(
+      'dots-horizontal', 28, 
+      'opacity: 70%; margin-top: 15px; right: calc(-100% + 46px); cursor: pointer;'
+    );
     this.helperDiv = document.createElement("div");
     this.helperVisible = false;
     this.UI_Element_Options = ['testimony-mode', 'now-playing', 'smart-tn', 'tts', 'quick-sfx'];
     this.TabState = {
       NONE: {
         enabled: true,
-        onEnable: function() {
-          tabSeparator.classList.add('hilr-hide');
+        onEnable: function(tabSeparator) {
+          tabSeparator.classList.add('hil-hide');
         },
-        onDisable: function() {
-          tabSeparator.classList.remove('hilr-hide');
+        onDisable: function(tabSeparator) {
+          tabSeparator.classList.remove('hil-hide');
         }
       },
       TESTIMONY: {},
@@ -35,14 +37,18 @@ class CourtroomOptionsHandler {
     this.contentRow = this.createRow(this.helperDiv);
     this.contentRow.classList.add('hil-content-row')
     this.tabState = this.TabState.NONE;
+
+    // Setting up link for icon
+    const link  = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css";
+    document.head.appendChild(link);
   }
 
   init() {
     let UIOptionsActivated = this.UI_Element_Options.some(sel => this.Courtroom.options[sel]);
     if(UIOptionsActivated) {
         //iconClass, fontPx = 24, styleText = '', classText = ''
-        this.helperToggle = FileExts.creation.createIcon('dots-horizontal', 28, 'opacity: 70%; margin-top: 15px; right: calc(-100% + 46px); cursor: pointer;');
-        console.log(this.helperToggle);
         this.Courtroom.objection_lol_resources.CourtroomRightSide.appendChild(this.helperToggle);
         this.helperDiv.className = 'transform: translateY(-10px); padding: 0 8px 0px;' + FileConstants.MISC.DEFAULT_TRANSITION;
         this.Courtroom.objection_lol_resources.CourtroomRightSide.appendChild(this.helperDiv);
@@ -153,12 +159,12 @@ class CourtroomOptionsHandler {
   }
 
   createTabButton(state, text) {
-    const button = FileExts.createButton(function () {
-    if (!state.enabled) setState(state);
-      else setState(TabState.NONE);
+    const button = FileExts.buttons.createButton(() => {
+    if (!this.state.enabled) this.setState(state);
+      else setState(this.TabState.NONE);
     }, text, '', 'flex: 1 1 auto;max-width: 10rem;');
       this.tabRow.appendChild(button);
-      state.tabButton = button;
+      this.state.tabButton = button;
       return button;
   }
 }
