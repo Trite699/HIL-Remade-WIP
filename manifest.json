@@ -25,6 +25,7 @@
                 "content/utils.js",
                 "content/helperFunctions.js",
                 "content/constants.js",
+                "content/OptionsController.js",
                 "content/main.js"
             ],
             "css": [
