@@ -9,7 +9,7 @@ class CourtroomOptionsHandler {
     this.Courtroom = courtroom;
     this.helperToggle =  FileExts.creation.createIcon(
       'dots-horizontal', 28, 
-      'opacity: 70%; margin-top: 15px; right: calc(-100% + 46px); cursor: pointer;'
+      'position: relative; opacity: 70%; margin-top: 15px; right: calc(-100% + 33px); cursor: pointer;'
     );
     this.helperDiv = document.createElement("div");
     this.helperVisible = false;
