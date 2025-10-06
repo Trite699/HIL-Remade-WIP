@@ -104,6 +104,8 @@ div.hil-tab-row-now-playing {
 
 div.hil-tab-row-now-playing span {
     margin-right: 12px;
+    position: relative;
+    margin: 0 650px;
 }
 
 input.hil-tn-pattern {
