@@ -7,59 +7,68 @@ const FileConstants = properties;
 class CourtroomOptionsHandler {
   constructor(courtroom) {
     this.Courtroom = courtroom;
-    this.helperToggle =  FileExts.creation.createIcon(
-      'dots-horizontal', 28, 
-      'position: relative; opacity: 70%; margin-top: 15px; right: calc(-100% + 33px); cursor: pointer;'
-    );
-    this.helperDiv = document.createElement("div");
-    this.helperVisible = false;
     this.UI_Element_Options = ['testimony-mode', 'now-playing', 'smart-tn', 'tts', 'quick-sfx'];
     this.TabState = {
-      NONE: {
-        enabled: true,
-        onEnable: function(tabSeparator) {
-          tabSeparator.classList.add('hil-hide');
+        NONE: {
+            enabled: true,
+            onEnable: function(tabSeparator) {
+                tabSeparator.classList.add('hil-hide');
+            },
+            onDisable: function(tabSeparator) {
+                tabSeparator.classList.remove('hil-hide');
+            }
         },
-        onDisable: function(tabSeparator) {
-          tabSeparator.classList.remove('hil-hide');
-        }
-      },
-      TESTIMONY: {},
-      TN: {},
-      TTS: {}, 
-      QUICKSFX: {}
+        TESTIMONY: {},
+        TN: {},
+        TTS: {}, 
+        QUICKSFX: {}
     }
+    this.injectMdiIcons.bind(this);
+    }
+
+    init() {
+        let UIOptionsActivated = this.UI_Element_Options.some(sel => this.Courtroom.options[sel]);
+        if(UIOptionsActivated) {
+            this.injectMdiIcons();
+            this.uiInit();
+            this.helperToggle.addEventListener('click', () => {
+              this.toggleHelperDiv();
+            });
+
+        this._setUpNowPlayingUI();
+        // this._setUpTestimonyModeUI();
+    }
+  }
+
+uiInit() { 
+    let startingCSS = 'display: flex; justify-content: flex-end; opacity: 70%; cursor: pointer;';
+    
+    //"opacity: 70%; margin-top: 15px; right: calc(-100% + 46px); cursor: pointer;";
+
+    
+    this.helperToggle =  FileExts.creation.createIcon('dots-horizontal', 28, startingCSS);
+    this.Courtroom.objection_lol_resources.CourtroomRightSide.appendChild(this.helperToggle);
+
+    this.helperDiv = document.createElement("div");
+    this.helperVisible = false;
+       
+    this.contentRow = this.createRow(this.helperDiv);
+    this.contentRow.classList.add('hil-content-row')
+    this.tabState = this.TabState.NONE;
+
+    this.tabSeparator = document.createElement('hr');
+    this.tabSeparator.className = 'hil-row-separator hil-hide';
+    this.helperDiv.appendChild(this.tabSeparator);
+
+    this.helperDiv.className = 'transform: translateY(-10px); padding: 0 8px 0px;' + FileConstants.MISC.DEFAULT_TRANSITION;
+    this.Courtroom.objection_lol_resources.CourtroomRightSide.appendChild(this.helperDiv);    
+  }
+
+  injectMdiIcons() {
     const link  = document.createElement("link");
     link.rel = "stylesheet";
     link.href = "https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css";
     document.head.appendChild(link);
-    this.init.bind(this);
-    }
-
-  init() {
-    let UIOptionsActivated = this.UI_Element_Options.some(sel => this.Courtroom.options[sel]);
-    if(UIOptionsActivated) {
-      //this.tabRow = this.createRow(this.helperDiv);
-           
-        this.contentRow = this.createRow(this.helperDiv);
-        this.contentRow.classList.add('hil-content-row')
-        this.tabState = this.TabState.NONE;
-
-        this.tabSeparator = document.createElement('hr');
-        this.tabSeparator.className = 'hil-row-separator hil-hide';
-        this.helperDiv.appendChild(this.tabSeparator);
-         //iconClass, fontPx = 24, styleText = '', classText = ''
-        this.Courtroom.objection_lol_resources.CourtroomRightSide.appendChild(this.helperToggle);
-        this.helperDiv.className = 'transform: translateY(-10px); padding: 0 8px 0px;' + FileConstants.MISC.DEFAULT_TRANSITION;
-        this.Courtroom.objection_lol_resources.CourtroomRightSide.appendChild(this.helperDiv);
-        
-        this.helperToggle.addEventListener('click', () => {
-          this.toggleHelperDiv();
-        });
-
-        this._setUpNowPlayingUI();
-        this._setUpTestimonyModeUI();
-    }
   }
 
   //Options UI functions
