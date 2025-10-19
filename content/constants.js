@@ -3,7 +3,8 @@
 const properties = {
   TAGS: {
     PAUSE_100: '[#p100]',
-    MUSIC_FADE_OUT: '[#bgmfo]'
+    MUSIC_FADE_OUT: '[#bgmfo]',
+    MUSIC_STOP: '[#bgms]'
   },
 
   STRINGS: {
@@ -44,6 +45,8 @@ const properties = {
     padding: 5px;
     margin: 0;
     border: #552a2e 1px solid;
+    background: rgb(18, 18, 18);
+    color: white;
     `,
 
     TESTIMONY_DIV: `
