@@ -25,13 +25,14 @@
                 "content/utils.js",
                 "content/helperFunctions.js",
                 "content/constants.js",
+                "content/TestimonyMode.js",
                 "content/OptionsController.js",
                 "content/main.js"
             ],
             "css": [
                 "content/style.css"
             ],
-            "run_at": "document_end"        
+            "run_at": "document_idle"        
         }
     ],
     "web_accessible_resources": [
