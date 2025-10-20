@@ -68,11 +68,11 @@ hr.hil-row-separator {
 }
 
 button.hil-btn-tab-active.theme--dark {
-    background: #444 !important;
+    background: #444;
 }
 
 button.hil-btn-tab-active.theme--light {
-    background: #ddd !important;
+    background: #ddd;
 }
 
 input.hil-row-textbox {
@@ -113,15 +113,41 @@ input.hil-tn-pattern {
     color: #fff;
 }
 
-button.hil-testiony-btn {
-    flex: 1 1 auto !important;
-    background-color: var(--color-testimony-dark) !important;
-    padding: 0 8px !important;
-    font-size: small !important;
+button.hil-tm-btnctrl {
+    flex: 1 1 auto;
+    max-width: 9rem;
+    border-radius: 8px;
+    background: #444444;
+    color: #e8e8e8;
+    box-shadow: none;
+    border: none;
+    cursor: pointer;
 }
 
-.hil-testiony-btn.theme--light {
-    background-color: var(--color-testimony-light) !important;
+div.hil-row > button.hil-testimony-btn.dark-theme.success {
+    background: rgb(70, 170, 80);
+    border: none;
+    border-radius: 4px;
+    color: rgb(229, 242, 229);
+}
+
+div.hil-row > input {
+    background: rgb(18, 18, 18);
+    border-color: rgb(42, 42, 42);
+}
+
+button.hil-testimony-btn {
+    flex: 1 1 auto;
+    background-color: var(--color-testimony-dark);
+    padding: 0 8px;
+    font-size: small;
+    border: none;
+    border-radius: 4px;
+    color: rgb(229, 242, 229)
+}
+
+.hil-testimony-btn.theme--light {
+    background-color: var(--color-testimony-light);
 }
 
 .hil-tab-row-tts>button,
