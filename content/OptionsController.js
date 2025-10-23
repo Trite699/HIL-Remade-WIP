@@ -34,11 +34,8 @@ class CourtroomOptionsHandler {
                 this.toggleHILDots();
             });
             
-            
             //this._setUpNowPlayingUI();
             this._setupTestimonyModeUI();
-            //this._injectScripts();
-            //this.Courtroom._updateTheme();
         }
     }
 
@@ -78,7 +75,6 @@ class CourtroomOptionsHandler {
         }
     }
 
-      // Non-option based functions
 
     injectMdiIcons() {
         const link  = document.createElement("link");
@@ -163,3 +159,4 @@ class CourtroomOptionsHandler {
         this.hilDiv.style.removeProperty('transform');
     }
 }
+
