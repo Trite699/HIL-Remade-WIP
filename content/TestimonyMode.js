@@ -6,8 +6,6 @@ class Testimony {
   static START_WITHOUT_TITLE = 0;
   static START_WITH_TITLE = 1;
 
-
-
   constructor(optsController) {
     this.optionsController = optsController;
     this.court = this.optionsController.Courtroom;
@@ -22,42 +20,35 @@ class Testimony {
   }
 
   init() {
-    // Step 1: Create UI containers and elements
     this.TestimonyTabDiv = this.optionsController.createTabDiv(this.optionsController.TabState.TESTIMONY);
-    this.TestimonyRow = this.optionsController.createRow(this.TestimonyTabDiv); // ✅ Keeps up with old code
+    this.TestimonyRow = this.optionsController.createRow(this.TestimonyTabDiv); 
 
-    // Create textarea for testimony input
     this.TestimonyArea = document.createElement('textarea');
     this.TestimonyArea.className = 'hil-themed-text';
     this.TestimonyArea.style.cssText = properties.STYLES.TESTIMONY_BOX;
     this.TestimonyArea.placeholder = "Paste your testimony here.\nSeparate statements with line breaks.";
-
-    // Create div for locked testimony display
+    
     this.TestimonyDiv = document.createElement('div');
     this.TestimonyDiv.className = 'hil-themed-text';
     this.TestimonyDiv.style.cssText = 'display: none; width: 100%; height: 600px; overflow: auto; padding: 5px 0px; margin: 0; border: #7f3e44 1px solid;';
 
-    // Create primary div for navigation buttons
     this.primeDiv = document.createElement('div');
-    this.primeDiv.style.cssText = 'display: none;' + stylers.MISC.DEFAULT_TRANSITION; //✅
+    this.primeDiv.style.cssText = 'display: none;' + stylers.MISC.DEFAULT_TRANSITION;
 
-    if(this.court.textArea) {
-      this.court.textArea.parentElement.appendChild(this.TestimonyArea);
-      this.court.textArea.parentElement.appendChild(this.TestimonyDiv);
+    if(this.court.objection_lol_resources.textArea) {
+      this.court.objection_lol_resources.textArea.parentElement.appendChild(this.TestimonyArea);
+      this.court.objection_lol_resources.textArea.parentElement.appendChild(this.TestimonyDiv);
     } else {
       throw Error("We cannot render these elements since the textArea failed to be found, please remake a function to check all elements before startup");
     }
 
-    // Step 2: Create testimony lock functionality
     this.lockTestimony = externals.buttons.primaryButton(
       this.setupLockButton.bind(this), '',
       'display: none; background-color: #7f3e44 !important; margin: 0 4px;', 
       externals.creation.createIcon('check')
     );
     this.court.objection_lol_resources.textButton.parentElement.parentElement.insertBefore(this.lockTestimony, this.court.objection_lol_resources.textButton.parentElement);
-    // ✅
 
-    // Step 3: Set up statement navigation
     this.buttonNextStatement = externals.buttons.primaryButton(
       undefined, '', 
       'background-color: #552a2e !important; margin-left: 4px;', 
@@ -70,17 +61,14 @@ class Testimony {
     );
 
     this.primeDiv.appendChild(this.buttonPrevStatement);
-    this.primeDiv.appendChild(this.buttonNextStatement); //✅
+    this.primeDiv.appendChild(this.buttonNextStatement);
     
     this.court.objection_lol_resources.textButton.parentElement.parentElement.appendChild(this.primeDiv);
-    // ✅
     
-    // Step 4: Configure tab state handlers
     this.optionsController.TabState.TESTIMONY.onEnable = this.onEnable.bind(this);
     this.optionsController.TabState.TESTIMONY.onDisable = this.onDisable.bind(this);
     this.TestimonyModeButton = this.optionsController.createTabButton(this.optionsController.TabState.TESTIMONY, 'Testimony Mode', "hil-tm-btnctrl");
-    this.TestimonyInputRow = this.optionsController.createRow(this.TestimonyTabDiv); //✅
-    // Step 5: Create input fields
+    this.TestimonyInputRow = this.optionsController.createRow(this.TestimonyTabDiv);
     this.musicInput = this.testimonyInput('hil-tm-music', 'Testimony Music', () => {
       window.postMessage(['set_socket_state', {
         [ 'testimony-music' ]: this.inputToTag(this.musicInput.value, 'bgm')
@@ -88,9 +76,6 @@ class Testimony {
     });
     
     this.selectInput = this.testimonyInput('hil-tm-select', 'Cross-exam click sound');
-    // ✅
-
-    // Step 6: Add toggle buttons
     this.TestimonyRow.appendChild(externals.buttons.iconToggleButton(
       () => { 
         this.red = !this.red;
@@ -111,27 +96,13 @@ class Testimony {
       () => { return this.auto = !this.auto; }, 
       'Use < > from chat', 
       'hil-testimony-btn'
-    )); // ✅
+    ));
 
     this.getPoses();
-
     this.buttonNextStatement.addEventListener('click', this.nextStatement.bind(this));
     this.buttonPrevStatement.addEventListener('click', this.prevStatement.bind(this));
-    // ✅
-    // Step 7: Set up message listeners
-    //this.getCharacterWatcher();
-
-    
-
-
-
-    // Step 8: Set up pose system listeners
-    
-
-    // Step 9: Initialize character observer
-
-    // Step 10: Register global state handlers
-    this.addListenerMovements(); //✅
+    this.getCharacterWatcher();
+    this.addListenerMovements(); 
     console.log("Testimony Mode Setup Complete");
   }
 
@@ -265,7 +236,7 @@ class Testimony {
   }
 
   onEnable() {
-    this.court.textArea.style.display = 'none';
+    this.court.objection_lol_resources.textArea.style.display = 'none';
     this.court.objection_lol_resources.textButton.parentElement.style.display = 'none';
     this.lockTestimony.style.display = 'flex';
     if (this.testimonyLocked) {
@@ -274,13 +245,12 @@ class Testimony {
     } else {
         this.TestimonyArea.style.display = 'block';
     }
-
   }
 
   onDisable() {
     this.TestimonyArea.style.display = 'none';
     this.TestimonyDiv.style.display = 'none';
-    this.court.textArea.style.display = 'block';
+    this.court.objection_lol_resources.textArea.style.display = 'block';
 
     this.court.objection_lol_resources.textButton.parentElement.style.display = 'block';
     this.lockTestimony.style.display = 'none';
@@ -314,7 +284,7 @@ class Testimony {
   nextStatement() {
     const hasTitledTestimony = this.crossExam && this.red && this.statements.length > 1;
     const reachedLastLine = this.currentStatement >= this.statements.length - (hasTitledTestimony ? 2 : 1);
-
+    
     if (this.currentStatement == undefined) {
         this.toStatement(0);
     } else if (reachedLastLine) {
@@ -346,9 +316,13 @@ class Testimony {
       continueSound: this.inputToTag(this.selectInput.value, 'bgs')
     }
   }
-  
+
   addListenerMovements() {
     externals.messageListeners.addMessageListener(window, 'plain_message', (message) => {
+      console.log("Plain message received: ", message);
+      console.log("Actual message: ", message.text);
+
+
       const direction = 
       externals.unknown.testRegex(message.text, "[> ]*") ? ">" 
       : externals.unknown.testRegex(message.text, "[< ]*") ? "<" : undefined;
@@ -403,9 +377,6 @@ class Testimony {
         text = text.replaceAll('[/#]', '');
         text = continueSound + '[##ce][##dd][#ts10][#/g]' + text + '[/#]';
     }
-
-
-    //Stop Cross Examining
     
     if (!this.crossExam && statement == this.statements.length - 1) {
         if (this.red) {
