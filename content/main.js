@@ -1,8 +1,9 @@
 "use strict";
 
 const HILRExts = extUtils;
+const HILRHelpers = helpersUtils;
 const HILRConstants = properties;
-const SettingsController = CourtroomOptionsHandler;  
+const SettingsController = CourtroomOptionsHandler; 
 
 class Courtroom {
 
@@ -10,189 +11,141 @@ class Courtroom {
     this.selection = document.getSelection();
     this.states = {};
     this.modifierKeys = {};
-    this.theme;
-    this.textArea;
     this.testifyToggle;
     this.options;
     this.wrapperLoaded;
-    this.objection_lol_resources = {};
+    this.objection_lol_resources = {
+      app: document.querySelector("#root"),
+      textBackLog: []
+    };
     this.optionsLoaded = new Promise((resolve) => {
       chrome.storage.local.get('options', (result) => {
         this.options = result.options || {};
-        resolve(this.options);
+        resolve();
       });
     });
     
-    chrome.runtime.onMessage.addListener(async (request) => {
-      if(request.messsage == "courtroom_state_loaded") {
-        this._tryLoading(); 
+    chrome.runtime.onMessage.addListener((request) => {
+      const [ action ] = request;
+      if(action == "courtroom_state_loaded") {
+         this.tryLoading(); 
       }
     });
 
-    window.addEventListener("load", this.initializeHILR.bind(this));
-  }
-
-  _courtroomLocated() {
-    let tabUrl = document.URL;
-    result = () => tabUrl.split("courtroom/").length > 1;
-    if (result) return true;
-    return;
+    window.addEventListener("load", async () => {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      this.initializeHILR();
+    });
   }
 
   initializeHILR() {
-     if(!this._tryLoading()) {
+    if(!this.tryLoading()) {
         new MutationObserver((mutations, observer) => {
-          if(this._tryLoading()) {
-              observer.disconnect();
+          if(this.tryLoading()) {
+            observer.disconnect();
           }
         }
-      ).observe(document.getElementById("root"), {
+      ).observe(this.objection_lol_resources.app, {
         childList: true,
         subtree: true,
-        once: true
       });
     }
-  }
-
-  waitForElement(selector, timeout = 3000) {
-    return new Promise((resolve, reject) => {
-      const target = document.querySelector(selector);
-
-      if(target) {
-        return resolve(target);
-      }
-
-      const elementFinderObserver = new MutationObserver((mutations, observer) => {
-        const targetScanNo = document.querySelector(selector);
-          if(targetScanNo) {
-            observer.disconnect();
-            clearTimeout(timeoutId);
-            return resolve(targetScanNo);
-          }
-      });
-
-      const timeoutId = setTimeout(() => {
-        console.log(`The current body: ${document.body.innerHTML}`)
-        elementFinderObserver.disconnect();
-        return reject(new Error(`Timeout (${timeout}ms) waiting for element: ${selector}`));
-      }, timeout);
-
-      elementFinderObserver.observe(this.objection_lol_resources.app, {
-        childList: true,
-        subtree: true
-      });
-    })
   }
 
   async _loadObjectionLolResources() {
-
-    this.textArea = await this.waitForElement(".MuiInputBase-input.MuiOutlinedInput-input");
-    this.textArea.classList.add("HILR-loaded"); 
-    this.textValue = text => HILRExts.text.setValue(this.textArea, text);
-
-    const resources = { 
-      textButton: await this.waitForElement(".MuiButtonBase-root.MuiIconButton-root.MuiIconButton-colorInherit.MuiIconButton-sizeMedium.css-11rdika"),
-      chatBox: await this.waitForElement(".MuiStack-root.css-ijtv1l"),
-      chat: await this.waitForElement(".MuiList-root.MuiList-padding.css-f8flsj"),
-      CourtroomWindow: await this.waitForElement(".MuiGrid2-root.MuiGrid2-container.MuiGrid2-direction-xs-row.MuiGrid2-spacing-xs-1.css-3vuqz1"),
-      CourtroomLeftSide: await this.waitForElement(".MuiStack-root.css-j7qwjs"),
-      CourtroomRightSide: await this.waitForElement(".MuiGrid2-root.MuiGrid2-direction-xs-row.MuiGrid2-grid-xs-0.MuiGrid2-grid-md-5.MuiGrid2-grid-lg-5.css-wpmqq4"),
-      CourtroomTabs: document.querySelector(".MuiTabs-list.MuiTabs-flexContainer.css-162tvoi") || document.querySelector(".MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation3.css-1xpbjc9")
-    }
-
-    return resources;
-  }
- 
-  _tryLoading() {
-    if(document.title == "Create Courtroom") return; //new Error('This is not an error. This is just to abort javascript.');
-    const isTextBoxLoaded = document.querySelector('.MuiInputBase-input.MuiOutlinedInput-input:not(.HILR-loaded)') && document.querySelector('.MuiInputBase-input.MuiOutlinedInput-input');
-    if(!isTextBoxLoaded) return false;
-    this.onLoad(); return true;
-  }
-
-  async onLoad() {
-    if(!this._courtroomLocated) return;
-    console.log("holdit.lol v0.7.5 beta - running onLoad()");
-    this.objection_lol_resources.app = document.getElementById("root");
-    Object.assign(this.objection_lol_resources, await this._loadObjectionLolResources());
-    this._waitForTheme();
-    document.body.classList.add("hil-themed");
-    document.body.classList.add(this.theme);
-    this.objection_lol_resources.textBackLog = [];
-    this._isTextSendable();
-    let Controller = new SettingsController(this);
-    Controller.init();
-  }
-
-  _waitForTheme() {
-    const themeButtonSelector = ".PrivateSwitchBase-input.MuiSwitch-input.css-j8yymo";
+    const app = this.objection_lol_resources.app;
+    const [textArea, textButton, chatBox, chat, CourtroomWindow, CourtroomLeftSide, CourtroomRightSide] = await Promise.all([
+      HILRHelpers.waitForElement(".MuiInputBase-input.MuiOutlinedInput-input", app),
+      HILRHelpers.waitForElement(".MuiButtonBase-root.MuiIconButton-root.MuiIconButton-colorInherit.MuiIconButton-sizeMedium.css-11rdika", app),
+      HILRHelpers.waitForElement(".MuiStack-root.css-ijtv1l", app),
+      HILRHelpers.waitForElement(".MuiList-root.MuiList-padding.css-f8flsj", app),
+      HILRHelpers.waitForElement(".MuiGrid2-root.MuiGrid2-container.MuiGrid2-direction-xs-row.MuiGrid2-spacing-xs-1.css-3vuqz1", app),
+      HILRHelpers.waitForElement(".MuiStack-root.css-j7qwjs", app),
+      HILRHelpers.waitForElement(".MuiGrid2-root.MuiGrid2-direction-xs-row.MuiGrid2-grid-xs-0.MuiGrid2-grid-md-5.MuiGrid2-grid-lg-5.css-wpmqq4", app)
+    ]);
     
-    const themeObserver = new MutationObserver((mutations, observer) => {
-      const themeInput = document.querySelector(themeButtonSelector);
-      if(themeInput) {
-        observer.disconnect();
-        this.objection_lol_resources.ThemeInput = themeInput;
-        this.objection_lol_resources.ThemeInput.addEventListener("click", this._updateTheme.bind(this));
-      }
-    }).observe(this.objection_lol_resources.app, {
-      childList: true,
-      subtree: true
+    const themeData = HILRExts.theme.getTheme();
+    this.theme = themeData.theme;
+    themeData.themeInput.addEventListener('click', this.applyTheme.bind(this));
+
+    const requiredResources = [textArea, textButton, chatBox, chat, CourtroomWindow, CourtroomLeftSide, CourtroomRightSide];
+    const results = requiredResources.every(elem => elem);
+    if(!results) throw new Error("there was an error with the ui");
+    let textValue = text => HILRExts.text.setValue(textArea, text);
+    document.body.classList.add("hil-themed");
+    this.applyTheme();
+    document.body.classList.add(this.theme);
+    textArea.classList.add("HILR-loaded");
+
+    Object.assign(this.objection_lol_resources, {
+      textArea, 
+      textButton, 
+      chatBox, 
+      chat,
+      CourtroomWindow,
+      CourtroomLeftSide,
+      CourtroomRightSide,
+      textValue,
+    });
+  }
+
+  tryLoading() {
+    const hilNotStart = document.querySelector(".MuiInputBase-input.MuiOutlinedInput-input:not(.HILR-loaded)");
+    if(!hilNotStart) return false;
+    this.optionsLoaded.then(() => {
+      this.onLoad();
+    });
+    return true;
+  }
+
+  onLoad() {
+    if(!HILRHelpers.inCourtroom()) return;
+    console.log("holdit.lol v0.7.5 beta - running onLoad()");
+    this._loadObjectionLolResources().then(() => {
+      this.processTextBackLog();
+      let Controller = new CourtroomOptionsHandler(this);
+      Controller.init();
     });
   }
 
   sendText(text, persistent=false) {
-    const oldValue = this.textArea.value;
+    const oldValue = this.objection_lol_resources.textArea.value;
     if(!this.objection_lol_resources.textButton.classList.contains("Mui-disabled")) {
-      extUtils.text.setValue(this.textArea, text);
+      HILRExts.text.setValue(this.objection_lol_resources.textArea, text);
       this.objection_lol_resources.textButton.click();
-      extUtils.text.setValue(this.textArea, oldValue);
+      HILRExts.text.setValue(this.objection_lol_resources.textArea, oldValue);
     } else if(persistent) {
       this.objection_lol_resources.textBackLog.push(text);
     }
   }
 
-  _isTextSendable() {
-    let textButtonObserver = new MutationObserver((mutations) => {
-        for (let mutation of mutations) {
-            if (!this.objection_lol_resources.textButton.classList.contains('Mui-disabled') && this.objection_lol_resources.textBackLog.length > 0) {
-                const text = this.objection_lol_resources.textBacklog.shift();
-                this.sendText(text);
-            }
-
-        }
-    }).observe(this.objection_lol_resources.textButton, { attributes: true, attributeFilter: ['class'] });
-  }
-
-  _getUserTheme() {
-    if(this.objection_lol_resources.ThemeInput.checked == true) {
-      this.theme = "theme--dark";
-      return;
-    }
-    this.theme = "theme--light";
-  }
-
-  _updateTheme() {
-    this._getUserTheme();
-    this._themeSetup();
-  }
-
-  _themeSetup() {
-    const elements = document.querySelectorAll(".hil-themed");
-    for(let elem of elements) {
-      elem.classList.remove("theme--dark");
-      elem.classList.remove("theme--light"); 
-      elem.classList.add(this.theme);
-    }
-
-    for(let element of document.querySelectorAll(".hil-themed-text")) {
-      if(this.theme == "theme--dark") {
-        element.style.color = HILRConstants.COLORS.BLACK;
-        continue;
+  processTextBackLog() {
+    let textButtonObs = new MutationObserver((mutations) => {
+      const disabled = this.objection_lol_resources.textButton.classList.contains('Mui-disabled');
+      const hasMoreToSay = this.objection_lol_resources.textBackLog.length > 0;
+      if(!disabled && hasMoreToSay) {
+        const text = this.objection_lol_resources.textBackLog.shift();
+        this.sendText(text);
       }
-      element.style.color = HILRConstants.COLORS.WHITE;
-    }
+    });
+
+    textButtonObs.observe(this.objection_lol_resources.textButton, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  applyTheme() {
+    Array.from(document.querySelectorAll('.hil-themed'))
+    .forEach(elem => {
+      elem.classList.remove("theme--dark", "theme--light");
+      elem.classList.add(this.objection_lol_resources.theme);
+    });
+
+    Array.from(document.querySelectorAll('.hil-themed-text'))
+    .forEach(elem => {
+      this.objection_lol_resources.theme === "theme--dark" ?
+      elem.style.color = HILRConstants.COLORS.BLACK :
+      elem.style.color = HILRConstants.COLORS.WHITE;
+    });
   }    
 }
 
-
-let Court = new Courtroom();
+let MainProcess = new Courtroom();
