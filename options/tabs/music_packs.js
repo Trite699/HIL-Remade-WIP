@@ -11,7 +11,8 @@ export const music_packs = {
         { key: 'ost-tgaa1', title: 'The Great Ace Attorney: Adventures', description: '' },
         { key: 'ost-tgaa2', title: 'The Great Ace Attorney: Resolve', description: '' },
         { key: 'ost-aai1', title: 'Ace Attorney Investigations: Miles Edgeworth', description: '' },
-        { key: 'ost-aai2', title: 'Ace Attorney Investigations 2: Prosecutor\'s Path', description: '' },
+        { key: 'ost-aai2', title: 'Ace Attorney Investigations 2: Prosecutor\'s Gambit', description: '' },
+        { key: 'ost-aaic', title: 'Ace Attorney Investigations: Collection', description: '' },
         { key: 'ost-pl', title: 'Professor Layton vs. Phoenix Wright: Ace Attorney', description: '' },
     ],
 };
