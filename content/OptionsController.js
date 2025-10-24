@@ -34,7 +34,7 @@ class CourtroomOptionsHandler {
                 this.toggleHILDots();
             });
             
-            //this._setUpNowPlayingUI();
+            this._setUpNowPlayingUI(); // FIXED: Now Playing setup enabled before Testimony Mode
             this._setupTestimonyModeUI();
         }
     }
@@ -64,6 +64,8 @@ class CourtroomOptionsHandler {
             row.classList.add('hil-tab-row-now-playing');
             const span = document.createElement('span');
             span.innerHTML = 'Now Playing: …';
+        span.style.display = 'block';
+        span.style.marginBottom = '8px'; // added spacing to prevent overlap
             row.appendChild(span);
         }
     }
@@ -159,4 +161,3 @@ class CourtroomOptionsHandler {
         this.hilDiv.style.removeProperty('transform');
     }
 }
-
